@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { icons } from '../../assets/icons';
 
 const TabBar = ({ state, descriptors, navigation }) => {
     return (
         <View style={styles.tabBar}>
           {state.routes.map((route, index) => {
+            
             const { options } = descriptors[route.key];
             const label =
               options.tabBarLabel !== undefined
@@ -14,7 +16,8 @@ const TabBar = ({ state, descriptors, navigation }) => {
                 : route.name;
 
                 const isFocused = state.index === index;
-    
+                const iconColor = isFocused ? '#5F61D5' : '#24333D'
+                
             const onPress = () => {
               const event = navigation.emit({
                 type: 'tabPress',
@@ -45,9 +48,9 @@ const TabBar = ({ state, descriptors, navigation }) => {
                 onLongPress={onLongPress}
                 style={styles.tabBarItem}
               >
-                <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>
-                  {label}
-                </Text>
+                {
+                  icons[route.name]({color : iconColor})
+                }
               </TouchableOpacity>
             );
           })}

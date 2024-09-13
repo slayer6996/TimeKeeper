@@ -1,16 +1,33 @@
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { router } from 'expo-router'
+import { icons } from '../../assets/icons'
 
 const Header = () => {
   return (
-    <View>
-      <Text>Good day!</Text>
-      <Button title='+' onPress={() => router.push('/AddTask')} />
+
+    <View style={styles.header}>
+      <Pressable>
+        {icons.add()}
+      </Pressable>
+      <View style={styles.icons}>
+        <Pressable>
+          {icons.calendar()}
+        </Pressable>
+      </View>
     </View>
   )
 }
 
 export default Header
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row-reverse',
+    alignItems: 'center',
+    margin: 24
+  },
+  icons: {
+    marginRight: 25
+  }
+})
