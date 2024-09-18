@@ -17,7 +17,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
                 const isFocused = state.index === index;
                 const iconColor = isFocused ? '#5F61D5' : '#24333D'
-                
+
             const onPress = () => {
               const event = navigation.emit({
                 type: 'tabPress',

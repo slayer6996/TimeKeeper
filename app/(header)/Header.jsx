@@ -1,6 +1,6 @@
 import { Button, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { router } from 'expo-router'
+import { Link } from 'expo-router'
 import { icons } from '../../assets/icons'
 
 const Header = () => {
@@ -8,11 +8,15 @@ const Header = () => {
 
     <View style={styles.header}>
       <Pressable>
-        {icons.add()}
+        <Link href='/AddTask'>
+          {icons.add()}
+        </Link>
       </Pressable>
       <View style={styles.icons}>
         <Pressable>
-          {icons.calendar()}
+          <Link href='/Calendar'>
+            {icons.calendar()}
+          </Link>
         </Pressable>
       </View>
     </View>

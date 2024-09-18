@@ -19,7 +19,7 @@ const RootLayout = () => {
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{headerShown: false}} />
-      <Stack.Screen name="(header)" options={{headerShown: false}} />
+      <Stack.Screen name="(header)" options={{headerShown:false, presentation: 'modal'}} />
     </Stack>
   )
 }
