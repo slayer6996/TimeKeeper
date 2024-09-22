@@ -1,83 +1,58 @@
-import { Button, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View } from 'react-native'
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { useState, useEffect } from "react";
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useState } from "react";
+import DaySelector from '../components/addTaskFormComponents/DaySelector';
+import TimeSelector from '../components/addTaskFormComponents/TimeSelector';
+import TaskFormHeader from '../components/addTaskFormComponents/TaskFormHeader';
+import TaskTags from '../components/addTaskFormComponents/TaskTags';
 
 const AddTask = () => {
-  const [date, setDate] = useState(new Date());
-  const [taskName, setTaskName] = useState(null)
+  const [taskName, setTaskName] = useState(null);
+  const [notes, setNotes] = useState('');
 
-  useEffect(() => {
-    console.log(date);
+  const handleTaskNameChange = (e) => {
+    setTaskName(e);
+  }
 
-  }, [date])
-
-  const onChange = (e, selectedDate) => {
-    setDate(selectedDate);
-  };
+  const handleNotesChange = (e) => {
+    setNotes(e);
+  }
 
   return (
-    <ScrollView>
+    <ScrollView className="bg-white" automaticallyAdjustKeyboardInsets={true}>
+      <TaskFormHeader />
       <View>
-        <TextInput value={taskName} className='m-2 h-10 px-4 text-xl' onChangeText={setTaskName} placeholder={"Add Task Name"} placeholderTextColor={'gray'} />
+        <TextInput value={taskName} className='m-2 h-10 px-4 text-xl' onChangeText={handleTaskNameChange} placeholder={"Task Name"} placeholderTextColor={'gray'} />
         <View className='border border-gray-300' />
-        
       </View>
       <View>
-        <Text className='text-xl m-4 text-gray-500'>To-do on</Text>
-        <View style={styles.container}>
-          <Text className="mx-4 text-lg">Any day</Text>
-          <Switch className="mx-4" />
-        </View>
-        <View >
-          <Pressable className="bg-black-100 border border-gray-100" style={styles.container} >
-            <Text className="mx-4 my-2 text-lg">Mondays</Text>
-            <Text>Check</Text>
-          </Pressable>
-          <Pressable className="bg-black-100 border border-gray-100" style={styles.container} >
-            <Text className="mx-4 my-2 text-lg">Tuesdays</Text>
-            <Text>Check</Text>
-          </Pressable>
-          <Pressable className="bg-black-100 border border-gray-100" style={styles.container} >
-            <Text className="mx-4 my-2 text-lg">Wednesdays</Text>
-            <Text>Check</Text>
-          </Pressable>
-          <Pressable className="bg-black-100 border border-gray-100" style={styles.container} >
-            <Text className="mx-4 my-2 text-lg">Thursdays</Text>
-            <Text>Check</Text>
-          </Pressable>
-          <Pressable className="bg-black-100 border border-gray-100" style={styles.container} >
-            <Text className="mx-4 my-2 text-lg">Fridays</Text>
-            <Text>Check</Text>
-          </Pressable>
-          <Pressable className="bg-black-100 border border-gray-100" style={styles.container} >
-            <Text className="mx-4 my-2 text-lg">Saturdays</Text>
-            <Text>Check</Text>
-          </Pressable>
-          <Pressable className="bg-black-100 border border-gray-100" style={styles.container} >
-            <Text className="mx-4 my-2 text-lg">Sundays</Text>
-            <Text>Check</Text>
-          </Pressable>
-        </View>
-        <View className='border border-gray-300 my-4' />
+        <Text className='text-lg mx-4 mt-4 mb-2 text-gray-500'>To-do on</Text>
+          <DaySelector />
+        <View className='border border-gray-300 mb-2' />
+        <TimeSelector />
       </View>
-      <DateTimePicker
-          value={date}
-          mode={"time"}
-          is24Hour={true}
-          onChange={onChange}
+      <View className='border border-gray-300 mt-2' />
+        <TextInput
+          multiline={true}
+          numberOfLines={8}
+          placeholder={"Task notes"} 
+          placeholderTextColor={'gray'}
+          className='my-2 mx-4 p-2 text-base'
+          value={notes}
+          onChangeText={handleNotesChange}
         />
+        <View className='border border-gray-300' />
+        <TaskTags />
     </ScrollView>
 
   )
-}
+};
 
 export default AddTask
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent:'space-between'
+    flexWrap: 'wrap'
   }
-})
+});

@@ -8,5 +8,6 @@ export const icons = {
     Reminder: (props) => <Entypo name="stopwatch" size={24} {...props} />,
     Profile: (props) => <Feather name="user" size={24} {...props} />,
     add: () => <AntDesign name="pluscircleo" size={32} color="#8B8CDD" />,
-    calendar: () => <Feather name="calendar" size={32} color='#8B8CDD' />
+    calendar: () => <Feather name="calendar" size={32} color='#8B8CDD' />,
+    check: () => <Feather name="check" size={18} color="gray" />
 }
