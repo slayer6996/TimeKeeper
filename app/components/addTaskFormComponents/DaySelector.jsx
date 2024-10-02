@@ -1,22 +1,46 @@
 import { StyleSheet, Text, Pressable, View, Switch } from 'react-native'
 import { icons } from '../../../assets/icons';
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { TaskFormContext } from '../../../context/TaskFormContextProvider';
 
-const DaySelector = ({ selectedDays = [] }) => {
+const DaySelector = () => {
+    const formContext = useContext(TaskFormContext);
     const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-    const [isAnyDay, setIsAnyDay] = useState(false);
-    const [daysSelection, setDaysSelection] = useState(selectedDays);
+    const [isAnyDay, setIsAnyDay] = useState(formContext.taskForm.days.length == 7);
+    const [daysSelection, setDaysSelection] = useState(formContext.taskForm.days);
 
     const toggleAnyDay = () => {
+        if(!isAnyDay) {
+            formContext.dispatch({
+                type: "UPDATE_TASK_FORM",
+                payload: { days: weekdays }
+            });
+        } else {
+            formContext.dispatch({
+                type: "UPDATE_TASK_FORM",
+                payload: { days: [] }
+            });
+            setDaysSelection([]);
+        }
         setIsAnyDay(prevState => !prevState);
     };
 
     const handleSelect = (selection) => {
         if (daysSelection.includes(selection)) {
-            setDaysSelection(prevState => prevState.filter(day => day !== selection));
+            const selectedDays = daysSelection.filter(day => day !== selection);
+            formContext.dispatch({
+                type: "UPDATE_TASK_FORM",
+                payload: {days: selectedDays}
+            });
+            setDaysSelection(selectedDays);
         } else {
-            setDaysSelection(prevState => [...prevState, selection]);
+            const selectedDays = [...daysSelection, selection];
+            formContext.dispatch({
+                type: "UPDATE_TASK_FORM",
+                payload: {days: selectedDays}
+            });
+            setDaysSelection(selectedDays);
         }
     }
 

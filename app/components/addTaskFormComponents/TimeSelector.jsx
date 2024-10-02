@@ -1,16 +1,19 @@
 import { StyleSheet, Text, View, Switch } from 'react-native'
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { TaskFormContext } from '../../../context/TaskFormContextProvider';
 
-const TimeSelector = ({ selectedTaskTime }) => {
-    const [taskTime, setTaskTime] = useState(selectedTaskTime ? selectedTaskTime : {
-        timeAt: null,
-        timeFrom: null,
-        timeTo: null
-    });
+const TimeSelector = () => {
+    const formContext = useContext(TaskFormContext);
+    
+    const [taskTime, setTaskTime] = useState(formContext.taskForm.time);
+    
+    const [isAnyTime, setIsAnyTime] = useState(!formContext.taskForm.time.timeAt && !formContext.taskForm.time.timeFrom);
+    const [isTimeRange, setIsTimeRange] = useState(formContext.taskForm.time.timeFrom !== null);
 
-    const [isAnyTime, setIsAnyTime] = useState(true);
-    const [isTimeRange, setIsTimeRange] = useState(false);
+    const [time, setTime] = useState(formContext.taskForm.time.timeAt || new Date());
+    const [timeFrom, setTimeFrom] = useState(formContext.taskForm.time.timeFrom || new Date());
+    const [timeTo, setTimeTo] = useState(formContext.taskForm.time.timeTo || new Date());
 
     useEffect(() => {
         setTaskTime({
@@ -21,12 +24,11 @@ const TimeSelector = ({ selectedTaskTime }) => {
     }, [isAnyTime, isTimeRange]);
 
     useEffect(() => {
-        //update time at form level
-    }, [taskTime])
-
-    const [time, setTime] = useState(new Date());
-    const [timeFrom, setTimeFrom] = useState(new Date());
-    const [timeTo, setTimeTo] = useState(new Date());
+        formContext.dispatch({
+            type: "UPDATE_TASK_FORM",
+            payload: { time: taskTime }
+        })
+    }, [taskTime]);
 
     const onTimeChange = (e, selectedTime) => {
         setTime(selectedTime);

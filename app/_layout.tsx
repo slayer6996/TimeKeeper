@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { SplashScreen, Stack } from 'expo-router'
 import {useFonts} from 'expo-font'
+import { TaskFormContextProvider } from '../context/TaskFormContextProvider'
 
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
@@ -17,10 +18,12 @@ const RootLayout = () => {
   });
 
   return (
+    <TaskFormContextProvider>
     <Stack>
       <Stack.Screen name="(tabs)" options={{headerShown: false}} />
       <Stack.Screen name="(header)" options={{headerShown:false, presentation: 'modal'}} />
     </Stack>
+    </TaskFormContextProvider>
   )
 }
 

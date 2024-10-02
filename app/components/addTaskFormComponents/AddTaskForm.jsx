@@ -1,27 +1,40 @@
 import { View, Text, TextInput, ScrollView } from 'react-native'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import DaySelector from './DaySelector';
 import TimeSelector from './TimeSelector';
 import AddTaskFormHeader from './AddTaskFormHeader';
 import TaskTags from './TaskTags';
+import { TaskFormContext } from '../../../context/TaskFormContextProvider';
 
 const AddTaskForm = () => {
-  const [taskName, setTaskName] = useState(null);
-  const [notes, setNotes] = useState('');
+  const formContext = useContext(TaskFormContext);
+  const [taskName, setTaskName] = useState(formContext.taskForm.taskName);
+  const [time, setTime] = useState(formContext.taskForm.time);
+  const [days, setDays] = useState(formContext.taskForm.days);
+  const [tasktag, setTaskTag] = useState(formContext.taskForm.tasktag);
+  const [notes, setNotes] = useState(formContext.taskForm.notes);
 
   const handleTaskNameChange = (e) => {
     setTaskName(e);
-  }
+    formContext.dispatch({
+      type: 'UPDATE_TASK_FORM',
+      payload: { taskName: e }
+    });
+  };
 
   const handleNotesChange = (e) => {
     setNotes(e);
-  }
+    formContext.dispatch({
+      type: 'UPDATE_TASK_FORM',
+      payload: { notes: e }
+    });
+  };
   
   return (
     <ScrollView className="bg-white" automaticallyAdjustKeyboardInsets={true}>
       <AddTaskFormHeader />
       <View>
-        <TextInput value={taskName} className='mx-2 mb-2 h-10 px-4 text-xl' onChangeText={handleTaskNameChange} placeholder={"Task Name"} placeholderTextColor={'gray'} />
+        <TextInput value={taskName || ""} className='mx-2 mb-2 h-10 px-4 text-xl' onChangeText={handleTaskNameChange} placeholder={"Task Name"} placeholderTextColor={'gray'} />
         <View className='border border-gray-300' />
       </View>
       <View>
@@ -37,7 +50,7 @@ const AddTaskForm = () => {
         placeholder={"Task notes"}
         placeholderTextColor={'gray'}
         className='my-2 mx-4 p-2 text-base'
-        value={notes}
+        value={notes || ""}
         onChangeText={handleNotesChange}
       />
       <View className='border border-gray-300' />

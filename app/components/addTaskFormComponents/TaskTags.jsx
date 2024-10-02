@@ -1,18 +1,28 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { TaskFormContext } from '../../../context/TaskFormContextProvider';
 
 const TaskTags = () => {
+    const formContext = useContext(TaskFormContext);
     const tags = ['Need-to-do', 'Want-to-do', 'Ritual', 'Hobby', 'School', 'Exam', 'Career'];
 
-    const [selectedTag, setSelectedTag] = useState('');
+    const [selectedTag, setSelectedTag] = useState(formContext.taskForm.taskTag || '');
 
     const handleSelectTag = (tag) => {
         if(tag !== selectedTag) {
+            formContext.dispatch({
+                type: 'UPDATE_TASK_FORM',
+                payload: {taskTag: tag}
+            })
             setSelectedTag(tag);
         } else {
+            formContext.dispatch({
+                type: 'UPDATE_TASK_FORM',
+                payload: {taskTag: null}
+            })
             setSelectedTag('');
         }
-    }
+    };
 
     return (
         <View className='mx-4 my-2'>
