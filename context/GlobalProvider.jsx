@@ -1,9 +1,9 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 const globalContext = createContext();
-export const useGlobalContext = () => useContext(globalContext);
+export { globalContext };
 
-const GlobalProvider = ({children}) => {
+const GlobalContextProvider = ({children}) => {
     const [isSignedUp, setIsSignedUp] = useState(false);
 
     useEffect(() => {
@@ -17,4 +17,4 @@ const GlobalProvider = ({children}) => {
     )
 }
 
-export default GlobalProvider;
+export { GlobalContextProvider };

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React from 'react'
 
-const TaskFormHeader = () => {
+const AddTaskFormHeader = () => {
   return (
     <View style={styles.header}>
         <Pressable>
@@ -15,7 +15,7 @@ const TaskFormHeader = () => {
   )
 }
 
-export default TaskFormHeader
+export default AddTaskFormHeader
 
 const styles = StyleSheet.create({
     header: {

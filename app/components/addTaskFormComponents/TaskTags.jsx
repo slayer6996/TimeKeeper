@@ -16,7 +16,7 @@ const TaskTags = () => {
 
     return (
         <View className='mx-4 my-2'>
-            <Text className='text-lg text-gray-500'>Task tag</Text>
+            <Text className='text-lg text-gray-500'>Task Tag</Text>
             <View style={styles.container}>
                 {
                     tags.map((tag) => (
