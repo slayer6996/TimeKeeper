@@ -9,9 +9,6 @@ import { TaskFormContext } from '../../../context/TaskFormContextProvider';
 const AddTaskForm = () => {
   const formContext = useContext(TaskFormContext);
   const [taskName, setTaskName] = useState(formContext.taskForm.taskName);
-  const [time, setTime] = useState(formContext.taskForm.time);
-  const [days, setDays] = useState(formContext.taskForm.days);
-  const [tasktag, setTaskTag] = useState(formContext.taskForm.tasktag);
   const [notes, setNotes] = useState(formContext.taskForm.notes);
 
   const handleTaskNameChange = (e) => {
