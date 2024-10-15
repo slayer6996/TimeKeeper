@@ -137,3 +137,20 @@ export function deleteTask(taskId, callback) {
         );
     });
 }
+
+//delete all tasks
+export function deleteAllTasks(callback) {
+    db.transaction(tx => {
+        tx.executeSql(
+            `DELETE FROM tasks`,
+            [],
+            (_, result) => {
+                callback(result);
+            },
+            (_, error) => {
+                console.error('Error deleting all tasks:', error);
+                callback(null);
+            }
+        );
+    });
+}
