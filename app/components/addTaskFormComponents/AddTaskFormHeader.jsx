@@ -3,13 +3,17 @@ import React, { useContext } from 'react'
 import { TaskFormContext } from '../../../context/TaskFormContextProvider';
 import { useNavigation } from '@react-navigation/native';
 import { createNewTask } from '../../../db/tasks';
+import { scheduleTaskNotification } from '../../../notification/taskReminder';
 
 const AddTaskFormHeader = () => {
   const navigation = useNavigation();
   const formContext = useContext(TaskFormContext);
 
   const saveTask = (task) => {
-    createNewTask(task);
+    createNewTask(task, (newTaskId) => {
+      console.log("new task created id:", newTaskId);
+      scheduleTaskNotification(task, newTaskId);
+    });
   };
 
   const handleSave = () => {
@@ -17,7 +21,7 @@ const AddTaskFormHeader = () => {
       Alert.alert('Incomplete details', 'Task name is required to create task.');
     } else{
       saveTask(formContext.taskForm);
-      navigation.goBack();
+      clearForm();
     }
   };
 

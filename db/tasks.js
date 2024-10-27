@@ -17,8 +17,8 @@ function createTasksTable() {
               taskTag TEXT
             );`,
             [],
-            () => { console.log('Table created successfully'); },
-            (_, error) => { console.log('Error while creating table:', error); }
+            () => { console.log('Tasks table created successfully'); },
+            (_, error) => { console.log('Error while creating Tasks table:', error); }
         );
     });
 }
@@ -38,16 +38,20 @@ export function createNewTask(task, callback) {
     createTasksTable();
     const { taskName, time, days, notes, taskTag } = task;
     const taskTime = formatTime(time);
-    const dayString = days.join(',');
+    const dayString = days.length > 0 ? days.join(',') : null;
     db.transaction(tx => {
         tx.executeSql(
             `INSERT INTO tasks (taskName, timeAt, timeFrom, timeTo, days, notes, taskTag) 
              VALUES (?, ?, ?, ?, ?, ?, ?);`,
             [taskName, taskTime.timeAt, taskTime.timeFrom, taskTime.timeTo, dayString, notes, taskTag],
-            (_, result) => { callback(result); },
-            (_, error) => { 
+            (_, result) => {
+                const {insertId} = result;
+                console.log(insertId);
+                callback(insertId); 
+            },
+            (_, error) => {
                 console.error(error);
-                callback(error); 
+                callback(error);
             }
         );
     });
@@ -122,17 +126,17 @@ export function updateTask(taskId, taskData, callback) {
 }
 
 //delete task
-export function deleteTask(taskId, callback) {
+export function deleteTask(taskId) {
     db.transaction(tx => {
         tx.executeSql(
             `DELETE FROM tasks WHERE id = ?`,
             [taskId],
             (_, result) => {
-                callback(result);
+                return result.rowsAffected;
             },
             (_, error) => {
                 console.error('Error deleting task:', error);
-                callback(error);
+                return null;
             }
         );
     });

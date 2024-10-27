@@ -14,27 +14,23 @@ export async function getNotificationPermission() {
 }
 
 export async function scheduleTimelyReminders() {
-    await Notifications.scheduleNotificationAsync({
+    const notificationIdentifier = await Notifications.scheduleNotificationAsync({
         content: {
             title: "Time's Ticking",
             body: '',
             data: { data: 'goes here' },
         },
-        trigger: { seconds: 2 }
+        trigger: { hour: 21, minute:42 }
     });
 }
 
 export async function scheduleTaskNotification() {
-    await Notifications.scheduleNotificationAsync({
+    const notificationIdentifier = await Notifications.scheduleNotificationAsync({
         content: {
             title: "Time's Ticking",
             body: '',
             data: { data: 'goes here' },
         },
-        trigger: { seconds: 2, repeats: true },
+        trigger: { hour: 21, minute:41, repeats: true },
     });
-}
-
-export async function cancelNotification(identifier) {
-    await Notifications.cancelScheduledNotificationAsync(identifier);
 }
