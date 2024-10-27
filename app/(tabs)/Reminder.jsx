@@ -21,11 +21,11 @@ const Reminder = () => {
     getNotificationPermission();
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      console.log(notification);
+      console.log("\n");
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
+      console.log("received");
     });
 
     return () => {
